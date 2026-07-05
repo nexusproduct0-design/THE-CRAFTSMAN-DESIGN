@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Craftsman Designs — Luxury Interior Design Studio, Bhopal</title>
+<meta name="description" content="The Craftsman Designs is a premium interior design studio in Bhopal crafting timeless residential, commercial, office and modular kitchen interiors.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<style>
+  :root{
+    --primary:#111111;
+    --secondary:#ffffff;
+    --accent:#C89B5A;
+    --accent-soft:#E4CFa4;
+    --bg:#F7F5F2;
+    --line:rgba(17,17,17,0.1);
+    --ease:cubic-bezier(.16,.84,.44,1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Inter',sans-serif;
+    background:var(--bg);
+    color:var(--primary);
+    overflow-x:hidden;
+    font-weight:400;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4{font-family:'Playfair Display',serif;font-weight:600;letter-spacing:-0.01em;}
+  a{text-decoration:none;color:inherit;}
+  ul{list-style:none;}
+  img{max-width:100%;display:block;}
+  button{font-family:inherit;cursor:pointer;border:none;background:none;}
+  .container{width:100%;max-width:1280px;margin:0 auto;padding:0 32px;}
+  .eyebrow{
+    font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--accent);
+    font-weight:600;display:inline-flex;align-items:center;gap:10px;margin-bottom:18px;
+  }
+  .eyebrow::before{content:"";width:28px;height:1px;background:var(--accent);}
+  .reveal{opacity:0;transform:translateY(36px);}
+
+  /* ===== CURSOR GLOW ===== */
+  #cursor-glow{
+    position:fixed;top:0;left:0;width:420px;height:420px;border-radius:50%;
+    pointer-events:none;z-index:2;
+    background:radial-gradient(circle, rgba(200,155,90,0.10) 0%, rgba(200,155,90,0) 70%);
+    transform:translate(-50%,-50%);
+    transition:opacity .4s ease;
+    opacity:0;
+  }
+
+  /* ===== NAV ===== */
+  .nav-wrap{position:fixed;top:24px;left:0;right:0;z-index:100;display:flex;justify-content:center;padding:0 24px;}
+  .nav{
+    display:flex;align-items:center;justify-content:space-between;gap:40px;
+    width:100%;max-width:1180px;padding:10px 10px 10px 26px;border-radius:100px;
+    background:rgba(255,255,255,0.85);
+    backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+    border:1px solid rgba(255,255,255,0.9);
+    box-shadow:0 12px 36px rgba(17,17,17,0.08);
+    transition:all .5s var(--ease);
+  }
+  .nav-link.is-active{border:1px solid var(--line);border-radius:100px;padding:8px 16px;}
+  .nav-link:not(.is-active){padding:8px 4px;}
+  .logo{display:flex;align-items:center;gap:10px;white-space:nowrap;}
+  .logo-mark{width:34px;height:34px;border-radius:50%;background:var(--primary);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .logo-mark svg{width:16px;height:16px;stroke:var(--accent);}
+  .logo-text{font-family:'Playfair Display',serif;font-size:17px;font-weight:600;letter-spacing:.01em;transition:color .3s;}
+  .nav-links{display:flex;gap:34px;}
+  .nav-link{font-size:14px;font-weight:500;color:var(--primary);position:relative;transition:color .3s;}
+  .nav-link::after{content:"";position:absolute;left:0;bottom:-4px;width:0;height:1px;background:var(--accent);transition:width .3s var(--ease);}
+  .nav-link:hover::after{width:100%;}
+  .nav-cta{
+    background:var(--primary);color:#fff;padding:12px 22px;border-radius:100px;font-size:13px;font-weight:600;
+    display:flex;align-items:center;gap:8px;white-space:nowrap;transition:transform .35s var(--ease), background .3s;
+  }
+  .nav-cta:hover{background:var(--accent);transform:translateY(-2px);}
+  .nav-cta svg{width:14px;height:14px;}
+  .burger{display:none;flex-direction:column;gap:5px;padding:6px;}
+  .burger span{width:20px;height:2px;background:var(--primary);}
+  .nav.dark .burger span{background:#fff;}
+
+  /* ===== HERO ===== */
+  .hero{
+    position:relative;height:100vh;min-height:680px;display:flex;align-items:center;justify-content:center;
+    overflow:hidden;background:var(--primary);
+  }
+  .hero{background:var(--bg);}
+  .hero-bg{
+    position:absolute;inset:0;width:100%;height:112%;top:-6%;
+    background-image:url('https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1920&q=80');
+    background-size:cover;background-position:center;
+    will-change:transform;
+  }
+  .hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg, rgba(247,245,242,.75) 0%, rgba(247,245,242,.18) 30%, rgba(247,245,242,0) 48%, rgba(247,245,242,.55) 100%);}
+  .hero-content{position:relative;z-index:5;text-align:center;color:var(--primary);padding:110px 24px 0;will-change:transform;}
+  .hero-eyebrow{
+    font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:#7a7a7a;font-weight:600;margin-bottom:22px;
+    display:inline-block;opacity:0;
+  }
+  .hero h1{
+    font-family:'Inter',sans-serif;
+    font-size:clamp(38px,6.4vw,80px);line-height:1.08;font-weight:600;letter-spacing:-0.01em;color:var(--primary);
+  }
+  .hero h1 .line{display:block;overflow:hidden;}
+  .hero h1 .line span{display:inline-block;transform:translateY(110%);}
+  .hero h1 em{font-family:'Playfair Display',serif;font-style:italic;font-weight:500;color:var(--accent);}
+  .hero-sub{
+    max-width:520px;margin:26px auto 0;font-size:16px;line-height:1.6;color:#5c5c5c;font-weight:400;opacity:0;
+  }
+  .hero-actions{display:flex;gap:14px;justify-content:center;margin-top:40px;flex-wrap:wrap;opacity:0;}
+  .btn{
+    padding:17px 30px;border-radius:100px;font-size:14px;font-weight:600;display:inline-flex;align-items:center;gap:10px;
+    transition:transform .4s var(--ease), background .35s, color .35s, border-color .35s, box-shadow .35s;
+  }
+  .btn-solid{background:var(--primary);color:#fff;box-shadow:0 10px 26px -8px rgba(17,17,17,0.35);}
+  .btn-solid:hover{background:var(--accent);color:var(--primary);transform:translateY(-3px);}
+  .btn-ghost{background:#fff;color:var(--primary);border:1px solid rgba(17,17,17,0.08);box-shadow:0 10px 26px -10px rgba(17,17,17,0.18);}
+  .btn-ghost:hover{background:var(--bg);transform:translateY(-3px);}
+  .btn svg{width:15px;height:15px;}
+  .hero-frame{
+    position:absolute;bottom:0;left:0;right:0;z-index:4;height:120px;
+    background:linear-gradient(180deg, rgba(247,245,242,0) 0%, var(--bg) 100%);
+  }
+
+  /* ===== SECTION GENERIC ===== */
+  section{position:relative;padding:140px 0;}
+  .section-head{max-width:640px;margin-bottom:64px;}
+  .section-head.center{margin-left:auto;margin-right:auto;text-align:center;}
+  .section-head h2{font-size:clamp(32px,4vw,48px);line-height:1.15;}
+  .section-head p{margin-top:18px;font-size:16px;line-height:1.7;color:#555;font-weight:300;}
+
+  /* ===== ABOUT ===== */
+  .about{background:var(--secondary);}
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
+  .about-copy p{font-size:16.5px;line-height:1.85;color:#4a4a4a;font-weight:300;margin-bottom:20px;}
+  .about-stats{display:flex;gap:44px;margin-top:36px;}
+  .about-stats div b{font-family:'Playfair Display',serif;font-size:30px;color:var(--primary);display:block;}
+  .about-stats div span{font-size:12px;color:#888;text-transform:uppercase;letter-spacing:.1em;}
+  .collage{position:relative;height:460px;}
+  .collage img{position:absolute;border-radius:6px;object-fit:cover;box-shadow:0 30px 60px -20px rgba(17,17,17,0.25);}
+  .collage .c1{width:62%;height:78%;top:0;left:0;z-index:2;}
+  .collage .c2{width:52%;height:52%;bottom:0;right:0;z-index:3;border:6px solid var(--secondary);}
+  .collage .badge{
+    position:absolute;bottom:36px;left:8%;z-index:4;background:var(--primary);color:#fff;padding:20px 26px;border-radius:6px;
+    box-shadow:0 20px 40px -10px rgba(0,0,0,.3);
+  }
+  .collage .badge b{font-family:'Playfair Display',serif;font-size:26px;color:var(--accent);display:block;}
+  .collage .badge span{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:rgba(255,255,255,.7);}
+
+  /* ===== WHY CHOOSE US ===== */
+  .why{background:var(--bg);}
+  .why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden;}
+  .why-card{background:var(--secondary);padding:44px 36px;transition:background .4s,transform .4s var(--ease);}
+  .why-card:hover{background:var(--primary);transform:translateY(-4px);}
+  .why-card:hover h3, .why-card:hover p{color:#fff;}
+  .why-card:hover .icon-box{background:var(--accent);}
+  .why-card:hover .icon-box svg{stroke:var(--primary);}
+  .icon-box{width:48px;height:48px;border-radius:50%;background:var(--bg);display:flex;align-items:center;justify-content:center;margin-bottom:22px;transition:background .4s;}
+  .icon-box svg{width:22px;height:22px;stroke:var(--accent);fill:none;stroke-width:1.6;transition:stroke .4s;}
+  .why-card h3{font-size:19px;margin-bottom:10px;transition:color .4s;}
+  .why-card p{font-size:14px;color:#777;line-height:1.6;font-weight:300;transition:color .4s;}
+
+  /* ===== SERVICES ===== */
+  .services{background:var(--primary);color:#fff;}
+  .services .section-head p{color:rgba(255,255,255,.6);}
+  .services .eyebrow{color:var(--accent);}
+  .services-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;}
+  .service-card{
+    border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:32px 22px;min-height:190px;
+    display:flex;flex-direction:column;justify-content:space-between;transition:all .4s var(--ease);position:relative;overflow:hidden;
+  }
+  .service-card::before{content:"";position:absolute;inset:0;background:var(--accent);transform:translateY(101%);transition:transform .45s var(--ease);z-index:0;}
+  .service-card:hover::before{transform:translateY(0);}
+  .service-card:hover{border-color:var(--accent);}
+  .service-card > *{position:relative;z-index:1;}
+  .service-card:hover .s-title, .service-card:hover .s-num{color:var(--primary);}
+  .service-card:hover svg{stroke:var(--primary);}
+  .s-num{font-size:12px;color:rgba(255,255,255,.4);font-weight:500;transition:color .4s;}
+  .service-card svg{width:26px;height:26px;stroke:var(--accent);fill:none;stroke-width:1.5;margin:14px 0;transition:stroke .4s;}
+  .s-title{font-family:'Playfair Display',serif;font-size:16.5px;font-weight:600;transition:color .4s;}
+
+  /* ===== PROJECTS ===== */
+  .projects{background:var(--bg);}
+  .proj-grid{display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:280px;gap:18px;}
+  .proj-item{position:relative;border-radius:10px;overflow:hidden;cursor:pointer;}
+  .proj-item.tall{grid-row:span 2;}
+  .proj-item img{width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease);}
+  .proj-item:hover img{transform:scale(1.08);}
+  .proj-overlay{
+    position:absolute;inset:0;background:linear-gradient(0deg, rgba(10,10,10,.88) 0%, rgba(10,10,10,0.05) 55%);
+    display:flex;flex-direction:column;justify-content:flex-end;padding:26px;opacity:0;transition:opacity .5s var(--ease);
+  }
+  .proj-item:hover .proj-overlay{opacity:1;}
+  .proj-cat{font-size:11px;text-transform:uppercase;letter-spacing:.16em;color:var(--accent);font-weight:600;margin-bottom:8px;}
+  .proj-title{font-family:'Playfair Display',serif;font-size:22px;color:#fff;margin-bottom:14px;}
+  .proj-link{display:inline-flex;align-items:center;gap:8px;color:#fff;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;width:fit-content;
+    border-bottom:1px solid var(--accent);padding-bottom:4px;}
+  .proj-link svg{width:12px;height:12px;}
+
+  /* ===== REVIEWS ===== */
+  .reviews{background:var(--secondary);}
+  .rating-row{display:flex;align-items:center;gap:24px;justify-content:center;margin-bottom:60px;flex-wrap:wrap;}
+  .rating-score{font-family:'Playfair Display',serif;font-size:54px;color:var(--primary);}
+  .stars{color:var(--accent);font-size:20px;letter-spacing:3px;}
+  .rating-meta{text-align:left;}
+  .rating-meta span{display:block;font-size:13px;color:#777;}
+  .slider{position:relative;max-width:760px;margin:0 auto;text-align:center;min-height:220px;}
+  .slide{position:absolute;inset:0;opacity:0;transform:translateY(14px);transition:opacity .6s var(--ease), transform .6s var(--ease);pointer-events:none;}
+  .slide.active{opacity:1;transform:translateY(0);pointer-events:auto;position:relative;}
+  .slide .quote-mark{font-family:'Playfair Display',serif;font-size:70px;color:var(--accent-soft);line-height:1;margin-bottom:6px;}
+  .slide p{font-size:22px;line-height:1.55;font-family:'Playfair Display',serif;font-weight:400;font-style:italic;color:var(--primary);max-width:640px;margin:0 auto 22px;}
+  .slide .author{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:#888;font-weight:600;}
+  .slider-dots{display:flex;justify-content:center;gap:10px;margin-top:36px;}
+  .slider-dots button{width:8px;height:8px;border-radius:50%;background:var(--line);transition:all .3s;}
+  .slider-dots button.active{background:var(--accent);width:26px;border-radius:6px;}
+
+  /* ===== PROCESS ===== */
+  .process{background:var(--bg);}
+  .timeline{position:relative;max-width:900px;margin:0 auto;}
+  .timeline::before{content:"";position:absolute;left:29px;top:10px;bottom:10px;width:1px;background:var(--line);}
+  .t-step{display:flex;gap:30px;padding-bottom:64px;position:relative;}
+  .t-step:last-child{padding-bottom:0;}
+  .t-num{
+    width:60px;height:60px;border-radius:50%;background:var(--secondary);border:1px solid var(--line);flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:20px;color:var(--accent);
+    position:relative;z-index:2;
+  }
+  .t-body h3{font-size:22px;margin-bottom:8px;margin-top:10px;}
+  .t-body p{font-size:15px;color:#666;font-weight:300;line-height:1.7;max-width:460px;}
+  .t-line-progress{position:absolute;left:29px;top:10px;width:1px;background:var(--accent);height:0;z-index:1;}
+
+  /* ===== STATS ===== */
+  .stats{background:var(--primary);color:#fff;}
+  .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:40px;text-align:center;}
+  .stat b{font-family:'Playfair Display',serif;font-size:clamp(38px,4vw,56px);color:var(--accent);display:block;}
+  .stat span{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.6);}
+
+  /* ===== CONTACT ===== */
+  .contact{background:var(--secondary);}
+  .contact-grid{display:grid;grid-template-columns:0.85fr 1.15fr;gap:70px;}
+  .info-block{margin-bottom:30px;}
+  .info-block .label{font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:var(--accent);font-weight:600;margin-bottom:8px;}
+  .info-block .value{font-size:16px;color:var(--primary);line-height:1.6;font-weight:400;}
+  .map-frame{width:100%;height:220px;border-radius:10px;overflow:hidden;margin-top:20px;border:1px solid var(--line);}
+  .map-frame iframe{width:100%;height:100%;border:0;filter:grayscale(20%);}
+  .social-row{display:flex;gap:12px;margin-top:26px;}
+  .social-row a{width:42px;height:42px;border-radius:50%;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;transition:all .3s;}
+  .social-row a:hover{background:var(--primary);border-color:var(--primary);}
+  .social-row a:hover svg{stroke:#fff;}
+  .social-row svg{width:17px;height:17px;stroke:var(--primary);fill:none;stroke-width:1.6;}
+  .form-card{background:var(--bg);border-radius:16px;padding:48px;border:1px solid var(--line);}
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px;}
+  .field label{display:block;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:#888;margin-bottom:8px;font-weight:600;}
+  .field input, .field select, .field textarea{
+    width:100%;padding:14px 16px;border:1px solid var(--line);border-radius:8px;background:var(--secondary);
+    font-family:'Inter',sans-serif;font-size:14.5px;color:var(--primary);transition:border-color .3s;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus{outline:none;border-color:var(--accent);}
+  .field textarea{resize:vertical;min-height:100px;}
+  .submit-btn{
+    width:100%;padding:17px;background:var(--primary);color:#fff;border-radius:8px;font-weight:600;font-size:14px;
+    margin-top:6px;transition:background .3s;display:flex;align-items:center;justify-content:center;gap:10px;
+  }
+  .submit-btn:hover{background:var(--accent);color:var(--primary);}
+  .submit-btn svg{width:15px;height:15px;}
+  .form-note{font-size:12px;color:#999;text-align:center;margin-top:14px;}
+
+  /* ===== FOOTER ===== */
+  footer{background:var(--primary);color:#fff;padding-top:90px;}
+  .footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:50px;padding-bottom:70px;border-bottom:1px solid rgba(255,255,255,0.1);}
+  .footer-about p{font-size:14px;color:rgba(255,255,255,.55);line-height:1.7;margin-top:18px;font-weight:300;max-width:280px;}
+  .footer-col h4{font-size:13px;text-transform:uppercase;letter-spacing:.12em;color:var(--accent);margin-bottom:22px;font-weight:600;font-family:'Inter',sans-serif;}
+  .footer-col li{margin-bottom:13px;}
+  .footer-col a{font-size:14px;color:rgba(255,255,255,.65);transition:color .3s;}
+  .footer-col a:hover{color:var(--accent);}
+  .footer-bottom{display:flex;justify-content:space-between;align-items:center;padding:30px 0;flex-wrap:wrap;gap:14px;}
+  .footer-bottom p{font-size:13px;color:rgba(255,255,255,.4);}
+  .footer-social{display:flex;gap:12px;}
+  .footer-social a{width:38px;height:38px;border-radius:50%;border:1px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;transition:.3s;}
+  .footer-social a:hover{background:var(--accent);border-color:var(--accent);}
+  .footer-social svg{width:15px;height:15px;stroke:#fff;fill:none;stroke-width:1.6;}
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width:1024px){
+    .services-grid{grid-template-columns:repeat(3,1fr);}
+    .why-grid{grid-template-columns:repeat(2,1fr);}
+    .about-grid{grid-template-columns:1fr;gap:50px;}
+    .collage{height:380px;margin-top:20px;}
+    .contact-grid{grid-template-columns:1fr;}
+    .stats-grid{grid-template-columns:repeat(2,1fr);gap:40px 20px;}
+    .proj-grid{grid-template-columns:repeat(2,1fr);}
+  }
+  @media (max-width:768px){
+    .nav-links{display:none;}
+    .burger{display:flex;}
+    .nav-cta{padding:10px 16px;font-size:12px;}
+    section{padding:90px 0;}
+    .services-grid{grid-template-columns:repeat(2,1fr);}
+    .why-grid{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:1fr 1fr;gap:36px;}
+    .form-row{grid-template-columns:1fr;}
+    .proj-grid{grid-template-columns:1fr;}
+    .proj-item.tall{grid-row:span 1;}
+    .rating-row{flex-direction:column;gap:6px;}
+    .rating-meta{text-align:center;}
+  }
+  @media (max-width:480px){
+    .services-grid{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:1fr;}
+    .about-stats{gap:24px;}
+    .form-card{padding:28px 20px;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.01ms !important;transition-duration:0.01ms !important;}
+  }
+</style>
+</head>
+<body>
+
+<div id="cursor-glow"></div>
+
+<!-- NAV -->
+<div class="nav-wrap">
+  <nav class="nav" id="mainNav">
+    <a href="#home" class="logo">
+      <span class="logo-mark"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round"><path d="M4 21V9l8-6 8 6v12"/><path d="M9 21v-6h6v6"/></svg></span>
+      <span class="logo-text">The Craftsman Designs</span>
+    </a>
+    <ul class="nav-links">
+      <li><a class="nav-link" href="#home">Home</a></li>
+      <li><a class="nav-link" href="#projects">Projects</a></li>
+      <li><a class="nav-link" href="#services">Services</a></li>
+      <li><a class="nav-link is-active" href="#about">About</a></li>
+      <li><a class="nav-link" href="#reviews">Reviews</a></li>
+      <li><a class="nav-link" href="#contact">Contact</a></li>
+    </ul>
+    <a href="#contact" class="nav-cta">Book Consultation <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H8M17 7v9"/></svg></a>
+    <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </nav>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content" id="heroContent">
+    <h1>
+      <span class="line"><span id="l1">Designing spaces that</span></span>
+      <span class="line"><span id="l2"><em>feel like home.</em></span></span>
+    </h1>
+    <p class="hero-sub" id="heroSub">Luxury interior design for homes, villas, offices &amp; commercial spaces in Bhopal.</p>
+    <div class="hero-actions" id="heroActions">
+      <a href="#contact" class="btn btn-solid">Book Free Consultation <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H8M17 7v9"/></svg></a>
+      <a href="#projects" class="btn btn-ghost"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="6 4 20 12 6 20 6 4"/></svg> View Our Portfolio</a>
+    </div>
+  </div>
+  <div class="hero-frame"></div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="container about-grid">
+    <div class="about-copy reveal">
+      <span class="eyebrow">Who We Are</span>
+      <h2>Interiors built on craftsmanship, not templates.</h2>
+      <p style="margin-top:24px;">The Craftsman Designs is a premium interior design studio based in Bhopal, creating timeless interiors that combine functionality, elegance, and craftsmanship.</p>
+      <p>Every project is uniquely designed to reflect our clients' personalities while maintaining world-class quality — from the first sketch to the final finish.</p>
+      <div class="about-stats">
+        <div><b>100+</b><span>Projects Delivered</span></div>
+        <div><b>5+</b><span>Years of Craft</span></div>
+        <div><b>4.9★</b><span>Client Rating</span></div>
+      </div>
+    </div>
+    <div class="collage reveal">
+      <img class="c1" src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=900&q=80" alt="Modern living room interior by The Craftsman Designs">
+      <img class="c2" src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=700&q=80" alt="Modular kitchen design by The Craftsman Designs">
+      <div class="badge"><b>5+</b><span>Years Experience</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY CHOOSE US -->
+<section class="why">
+  <div class="container">
+    <div class="section-head center reveal" style="margin-left:auto;margin-right:auto;">
+      <span class="eyebrow" style="justify-content:center;">Why Choose Us</span>
+      <h2>The difference is in the detail.</h2>
+    </div>
+    <div class="why-grid reveal">
+      <div class="why-card">
+        <div class="icon-box"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3 6 6 1-4.5 4.5 1 6.5-5.5-3-5.5 3 1-6.5L3 9l6-1z"/></svg></div>
+        <h3>Premium Materials</h3><p>Sourced finishes and materials selected for durability, texture and lasting beauty.</p>
+      </div>
+      <div class="why-card">
+        <div class="icon-box"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20l9-16H3l9 16z"/><path d="M12 4v16"/></svg></div>
+        <h3>Customized Designs</h3><p>No templates — every layout and finish is designed around how you actually live.</p>
+      </div>
+      <div class="why-card">
+        <div class="icon-box"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+        <h3>On-time Delivery</h3><p>Clear timelines, tracked milestones, and projects handed over exactly when promised.</p>
+      </div>
+      <div class="why-card">
+        <div class="icon-box"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h10M7 12h10M7 16h6"/></svg></div>
+        <h3>Transparent Pricing</h3><p>Itemised quotes with no hidden costs, so you always know what you're paying for.</p>
+      </div>
+      <div class="why-card">
+        <div class="icon-box"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M2 21v-1a6 6 0 0112 0v1"/><circle cx="18" cy="9" r="2.4"/><path d="M15.5 21v-1a4.5 4.5 0 016.5-4"/></svg></div>
+        <h3>Dedicated Design Team</h3><p>A single point of contact and a dedicated designer for your project, start to finish.</p>
+      </div>
+      <div class="why-card">
+        <div class="icon-box"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/></svg></div>
+        <h3>End-to-End Execution</h3><p>From concept to civil work, furnishing and styling — we manage every step.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Our Services</span>
+      <h2>Every space, considered.</h2>
+      <p>From a single room to a full commercial fit-out, our services cover the complete interior journey.</p>
+    </div>
+    <div class="services-grid reveal">
+      <div class="service-card"><span class="s-num">01</span><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l9-9 9 9"/><path d="M5 10v10h14V10"/></svg><span class="s-title">Residential Interiors</span></div>
+      <div class="service-card"><span class="s-num">02</span><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18"/><path d="M9 21v-5h6v5M9 8h1M14 8h1M9 12h1M14 12h1"/></svg><span class="s-title">Commercial Interiors</span></div>
+      <div class="service-card"><span class="s-num">03</span><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="1"/><path d="M3 9h18M8 4v5"/></svg><span class="s-title">Office Design</span></div>
+      <div class="service-card"><span class="s-num">04</span><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10h18M5 10V6a2 2 0 012-2h10a2 2 0 012 2v4M4 10l1 10h14l1-10"/></svg><span class="s-title">Modular Kitchen</span></div>
+      <div class="service-card"><span class="s-num">05</span><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a4 4 0 014-4h10a4 4 0 014 4v6"/><path d="M3 18h18M6 12v0M18 12v0"/></svg><span class="s-title">Bedroom Design</span></div>
+      <div class="service-card"><span class="s-num">06</span><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13h18v5H3zM5 13V9a2 2 0 012-2h10a2 2 0 012 2v4M3 18v2M21 18v2"/></svg><span class="s-title">Living Room Design</span></div>
+      <div class="service-card"><span class="s-num">07</span><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M7 6v14M17 6v14M3 6l4-3M21 6l-4-3"/></svg><span class="s-title">False Ceiling</span></div>
+      <div class="service-card"><span class="s-num">08</span><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 00-4 10.5c.6.6 1 1.4 1 2.5h6c0-1.1.4-1.9 1-2.5A6 6 0 0012 3z"/></svg><span class="s-title">Lighting Design</span></div>
+      <div class="service-card"><span class="s-num">09</span><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="13" width="16" height="6" rx="1"/><path d="M6 13V9a2 2 0 012-2h8a2 2 0 012 2v4M4 19v2M20 19v2"/></svg><span class="s-title">Furniture Design</span></div>
+      <div class="service-card"><span class="s-num">10</span><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 00-1-1.7l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.7l7 4a2 2 0 002 0l7-4a2 2 0 001-1.7z"/><path d="M3.3 6.6l8.7 5 8.7-5M12 22V11.5"/></svg><span class="s-title">3D Visualization</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="projects" id="projects">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Our Work</span>
+      <h2>A portfolio of considered spaces.</h2>
+      <p>A selection of homes and workplaces we've had the privilege to design and build.</p>
+    </div>
+    <div class="proj-grid reveal">
+      <div class="proj-item tall">
+        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80" alt="Luxury living room project">
+        <div class="proj-overlay"><span class="proj-cat">Residential</span><span class="proj-title">The Chuna Bhatti Residence</span><a class="proj-link" href="#contact">View Project <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a></div>
+      </div>
+      <div class="proj-item">
+        <img src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=800&q=80" alt="Modular kitchen project">
+        <div class="proj-overlay"><span class="proj-cat">Modular Kitchen</span><span class="proj-title">The Janki Nagar Kitchen</span><a class="proj-link" href="#contact">View Project <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a></div>
+      </div>
+      <div class="proj-item">
+        <img src="https://images.unsplash.com/photo-1615874959474-d609969a20ed?auto=format&fit=crop&w=800&q=80" alt="Corporate office design project">
+        <div class="proj-overlay"><span class="proj-cat">Office Design</span><span class="proj-title">MP Nagar Corporate Suite</span><a class="proj-link" href="#contact">View Project <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a></div>
+      </div>
+      <div class="proj-item">
+        <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=80" alt="Bedroom design project">
+        <div class="proj-overlay"><span class="proj-cat">Bedroom Design</span><span class="proj-title">The Mall Road Villa</span><a class="proj-link" href="#contact">View Project <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a></div>
+      </div>
+      <div class="proj-item tall">
+        <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=800&q=80" alt="Commercial retail interior project">
+        <div class="proj-overlay"><span class="proj-cat">Commercial</span><span class="proj-title">Arera Colony Showroom</span><a class="proj-link" href="#contact">View Project <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="reviews" id="reviews">
+  <div class="container">
+    <div class="section-head center reveal" style="margin-left:auto;margin-right:auto;">
+      <span class="eyebrow" style="justify-content:center;">Client Reviews</span>
+      <h2>Trusted by homeowners across Bhopal.</h2>
+    </div>
+    <div class="rating-row reveal">
+      <span class="rating-score">4.9</span>
+      <div class="rating-meta">
+        <span class="stars">★★★★★</span>
+        <span>38+ Google Reviews</span>
+      </div>
+    </div>
+    <div class="slider reveal">
+      <div class="slide active">
+        <div class="quote-mark">"</div>
+        <p>We had an amazing experience with the Craftsman Team. We are very satisfied with the quality of work.</p>
+        <div class="author">Varsha Dubey</div>
+      </div>
+      <div class="slide">
+        <div class="quote-mark">"</div>
+        <p>Choosing The Craftsman Designs was one of our best decisions. They perfectly turned our vision into reality.</p>
+        <div class="author">Bilal Abdi</div>
+      </div>
+      <div class="slide">
+        <div class="quote-mark">"</div>
+        <p>They beautifully decorated our flat. Special thanks to Pankaj for being incredibly supportive.</p>
+        <div class="author">Vijaylaxmi Shukla</div>
+      </div>
+      <div class="slider-dots" id="sliderDots"></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process">
+  <div class="container">
+    <div class="section-head center reveal" style="margin-left:auto;margin-right:auto;">
+      <span class="eyebrow" style="justify-content:center;">Our Process</span>
+      <h2>From first conversation to final reveal.</h2>
+    </div>
+    <div class="timeline reveal">
+      <div class="t-line-progress" id="tProgress"></div>
+      <div class="t-step"><div class="t-num">01</div><div class="t-body"><h3>Consultation</h3><p>We start by understanding your space, needs, style and budget in a free consultation.</p></div></div>
+      <div class="t-step"><div class="t-num">02</div><div class="t-body"><h3>Concept Design</h3><p>Our designers translate your brief into mood boards, layouts and material palettes.</p></div></div>
+      <div class="t-step"><div class="t-num">03</div><div class="t-body"><h3>3D Visualization</h3><p>See your space before it's built with photorealistic 3D renders and walkthroughs.</p></div></div>
+      <div class="t-step"><div class="t-num">04</div><div class="t-body"><h3>Execution</h3><p>Our dedicated site team manages civil work, carpentry, and finishing with precision.</p></div></div>
+      <div class="t-step"><div class="t-num">05</div><div class="t-body"><h3>Project Delivery</h3><p>A final walkthrough, styling touches, and handover of your finished space.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="container stats-grid reveal">
+    <div class="stat"><b data-count="38" data-suffix="+">0</b><span>Google Reviews</span></div>
+    <div class="stat"><b data-count="4.9" data-suffix="★" data-decimal="1">0</b><span>Average Rating</span></div>
+    <div class="stat"><b data-count="100" data-suffix="+">0</b><span>Projects Completed</span></div>
+    <div class="stat"><b data-count="5" data-suffix="+">0</b><span>Years Experience</span></div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="container contact-grid">
+    <div class="contact-info reveal">
+      <span class="eyebrow">Contact Us</span>
+      <h2 style="font-size:34px;margin-bottom:34px;">Let's design your next space.</h2>
+      <div class="info-block">
+        <div class="label">Business Name</div>
+        <div class="value">The Craftsman Designs</div>
+      </div>
+      <div class="info-block">
+        <div class="label">Address</div>
+        <div class="value">Shop No. 23, First Floor, The Mall,<br>Janki Nagar, Chuna Bhatti,<br>Bhopal, Madhya Pradesh 462016</div>
+      </div>
+      <div class="info-block">
+        <div class="label">Phone</div>
+        <div class="value">+91 98938 53138</div>
+      </div>
+      <div class="social-row">
+        <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.6" fill="currentColor" stroke="none"/></svg></a>
+        <a href="tel:+919893853138" aria-label="Call"><svg viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 012.1 4.2 2 2 0 014.1 2h3a2 2 0 012 1.7c.1.9.3 1.8.6 2.7a2 2 0 01-.4 2.1L8 9.9a16 16 0 006 6l1.5-1.3a2 2 0 012.1-.4c.9.3 1.8.5 2.7.6a2 2 0 011.7 2.1z"/></svg></a>
+      </div>
+      <div class="map-frame">
+        <iframe title="The Craftsman Designs location on Google Maps" loading="lazy" src="https://www.google.com/maps?q=Chuna+Bhatti,+Bhopal,+Madhya+Pradesh+462016&output=embed"></iframe>
+      </div>
+    </div>
+
+    <form class="form-card reveal" id="contactForm">
+      <div class="form-row">
+        <div class="field"><label>Name</label><input type="text" required placeholder="Your full name"></div>
+        <div class="field"><label>Phone</label><input type="tel" required placeholder="+91 00000 00000"></div>
+      </div>
+      <div class="form-row">
+        <div class="field"><label>Email</label><input type="email" required placeholder="you@email.com"></div>
+        <div class="field"><label>Project Type</label>
+          <select required>
+            <option value="">Select</option>
+            <option>Residential</option>
+            <option>Commercial</option>
+            <option>Office</option>
+            <option>Modular Kitchen</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="field" style="grid-column:1/-1;"><label>Budget</label>
+          <select>
+            <option value="">Select a range</option>
+            <option>Under ₹5 Lakh</option>
+            <option>₹5 – 15 Lakh</option>
+            <option>₹15 – 30 Lakh</option>
+            <option>Above ₹30 Lakh</option>
+          </select>
+        </div>
+      </div>
+      <div class="field" style="margin-bottom:18px;">
+        <label>Message</label>
+        <textarea placeholder="Tell us about your space and vision..."></textarea>
+      </div>
+      <button type="submit" class="submit-btn">Send Message <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></button>
+      <p class="form-note">We usually respond within 24 hours.</p>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-about">
+        <div class="logo">
+          <span class="logo-mark"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round"><path d="M4 21V9l8-6 8 6v12"/><path d="M9 21v-6h6v6"/></svg></span>
+          <span class="logo-text">The Craftsman Designs</span>
+        </div>
+        <p>Premium interior design studio in Bhopal, crafting timeless residential, commercial and office interiors.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#reviews">Reviews</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="#services">Residential Interiors</a></li>
+          <li><a href="#services">Office Design</a></li>
+          <li><a href="#services">Modular Kitchen</a></li>
+          <li><a href="#services">3D Visualization</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="tel:+919893853138">+91 98938 53138</a></li>
+          <li><a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a></li>
+          <li><a href="#contact">Chuna Bhatti, Bhopal</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 The Craftsman Designs. All rights reserved.</p>
+      <div class="footer-social">
+        <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/></svg></a>
+        <a href="tel:+919893853138" aria-label="Call"><svg viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 012.1 4.2 2 2 0 014.1 2h3a2 2 0 012 1.7c.1.9.3 1.8.6 2.7a2 2 0 01-.4 2.1L8 9.9a16 16 0 006 6l1.5-1.3a2 2 0 012.1-.4c.9.3 1.8.5 2.7.6a2 2 0 011.7 2.1z"/></svg></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+const nav = document.getElementById('mainNav');
+const hero = document.getElementById('home');
+window.addEventListener('scroll', ()=>{
+  if(window.scrollY > 30){ nav.style.boxShadow = '0 12px 30px rgba(17,17,17,0.1)'; }
+  else { nav.style.boxShadow = ''; }
+});
+
+/* ---------- Mobile burger (simple toggle to nav-cta only page) ---------- */
+document.getElementById('burger').addEventListener('click', ()=>{
+  const links = document.querySelector('.nav-links');
+  const visible = links.style.display === 'flex';
+  links.style.cssText = visible ? '' : 'display:flex;flex-direction:column;position:absolute;top:70px;right:0;background:#111;padding:20px 26px;border-radius:16px;gap:16px;';
+});
+
+/* ---------- Hero entrance ---------- */
+const tl = gsap.timeline({defaults:{ease:'power3.out'}});
+tl.to('#l1', {y:'0%', duration:1, ease:'power4.out'}, .1)
+  .to('#l2', {y:'0%', duration:1, ease:'power4.out'}, .25)
+  .to('#heroSub', {opacity:1, duration:.9}, .6)
+  .to('#heroActions', {opacity:1, duration:.9}, .8);
+
+/* ---------- Hero parallax (scroll + mouse) ---------- */
+gsap.to('#heroBg', {
+  yPercent: 18, ease:'none',
+  scrollTrigger:{ trigger: hero, start:'top top', end:'bottom top', scrub:true }
+});
+hero.addEventListener('mousemove', (e)=>{
+  const x = (e.clientX / window.innerWidth - 0.5) * 24;
+  const y = (e.clientY / window.innerHeight - 0.5) * 24;
+  gsap.to('#heroContent', {x, y, duration:1, ease:'power2.out'});
+});
+
+/* ---------- Cursor glow ---------- */
+const glow = document.getElementById('cursor-glow');
+window.addEventListener('mousemove', (e)=>{
+  glow.style.opacity = 1;
+  gsap.to(glow, {left:e.clientX, top:e.clientY, duration:.6, ease:'power2.out'});
+});
+window.addEventListener('mouseleave', ()=> glow.style.opacity = 0);
+
+/* ---------- Scroll reveals ---------- */
+document.querySelectorAll('.reveal').forEach((el)=>{
+  gsap.to(el, {
+    opacity:1, y:0, duration:1, ease:'power3.out',
+    scrollTrigger:{ trigger: el, start:'top 85%' }
+  });
+});
+
+/* ---------- Timeline progress line ---------- */
+gsap.to('#tProgress', {
+  height:'100%', ease:'none',
+  scrollTrigger:{ trigger: '.timeline', start:'top 70%', end:'bottom 80%', scrub:true }
+});
+
+/* ---------- Counters ---------- */
+document.querySelectorAll('.stat b').forEach((el)=>{
+  const target = parseFloat(el.dataset.count);
+  const suffix = el.dataset.suffix || '';
+  const decimals = el.dataset.decimal ? parseInt(el.dataset.decimal) : 0;
+  ScrollTrigger.create({
+    trigger: el, start:'top 90%', once:true,
+    onEnter:()=>{
+      let obj = {val:0};
+      gsap.to(obj, {
+        val: target, duration:1.8, ease:'power2.out',
+        onUpdate:()=>{ el.textContent = obj.val.toFixed(decimals) + suffix; }
+      });
+    }
+  });
+});
+
+/* ---------- Testimonial slider ---------- */
+const slides = document.querySelectorAll('.slide');
+const dotsWrap = document.getElementById('sliderDots');
+let current = 0;
+slides.forEach((_, i)=>{
+  const dot = document.createElement('button');
+  if(i===0) dot.classList.add('active');
+  dot.addEventListener('click', ()=> goTo(i));
+  dotsWrap.appendChild(dot);
+});
+const dots = dotsWrap.querySelectorAll('button');
+function goTo(i){
+  slides[current].classList.remove('active');
+  dots[current].classList.remove('active');
+  current = i;
+  slides[current].classList.add('active');
+  dots[current].classList.add('active');
+}
+setInterval(()=> goTo((current+1) % slides.length), 5000);
+
+/* ---------- Contact form (demo submit) ---------- */
+document.getElementById('contactForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  const btn = this.querySelector('.submit-btn');
+  const original = btn.innerHTML;
+  btn.innerHTML = 'Message Sent — Thank You';
+  btn.style.background = '#3a7d44';
+  setTimeout(()=>{ btn.innerHTML = original; btn.style.background = ''; this.reset(); }, 2600);
+});
+</script>
+</body>
+</html>
